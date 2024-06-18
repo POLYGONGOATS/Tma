@@ -1,20 +1,32 @@
 // script.js
 document.addEventListener("DOMContentLoaded", function() {
     const stepCountDisplay = document.getElementById('step-count');
-    const incrementButton = document.getElementById('increment-button');
     const convertButton = document.getElementById('convert-button');
     const stepsInput = document.getElementById('steps-input');
     const tokenResult = document.getElementById('token-result');
-    const authButton = document.getElementById('auth-button');
-    const authContainer = document.getElementById('auth-container');
     let stepCount = 0;
+    let lastShakeTime = null;
 
-    // Step counting functionality
-    incrementButton.addEventListener('click', function() {
-        stepCount++;
-        updateStepDisplay(stepCount);
-    });
+    // Update step count display
+    function updateStepDisplay(count) {
+        stepCountDisplay.textContent = count;
+    }
 
+    // Detect shake
+    function detectShake(event) {
+        const acceleration = Math.sqrt(event.acceleration.x ** 2 + event.acceleration.y ** 2 + event.acceleration.z ** 2);
+
+        if (acceleration > 15) { // Threshold for shake detection
+            const currentTime = Date.now();
+            if (!lastShakeTime || (currentTime - lastShakeTime) > 2000) { // 2 seconds interval
+                stepCount++;
+                updateStepDisplay(stepCount);
+                lastShakeTime = currentTime;
+            }
+        }
+    }
+
+    // Step conversion functionality
     convertButton.addEventListener('click', function() {
         const stepsToConvert = parseInt(stepsInput.value, 10);
         if (!isNaN(stepsToConvert) && stepsToConvert > 0) {
@@ -39,37 +51,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Google Fit API integration
-    authButton.addEventListener('click', function() {
-        authenticate().then(loadClient).then(getSteps);
-    });
-
-    function authenticate() {
-        return gapi.auth2.getAuthInstance()
-            .signIn({scope: "https://www.googleapis.com/auth/fitness.activity.read"})
-            .then(function() {
-                console.log("Sign-in successful");
-                authContainer.style.display = 'none';
-            }, function(err) {
-                console.error("Error signing in", err);
-            });
+    // Listen to device motion events
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', detectShake);
+    } else {
+        alert('Device Motion not supported');
     }
+});
 
-    function loadClient() {
-        gapi.client.setApiKey(YOUR_API_KEY);
-        return gapi.client.load("https://fitness.googleapis.com/$discovery/rest?version=v1")
-            .then(function() {
-                console.log("GAPI client loaded for API");
-            }, function(err) {
-                console.error("Error loading GAPI client for API", err);
-            });
-    }
-
-    function getSteps() {
-        return gapi.client.fitness.users.dataset.aggregate({
-            "userId": "me",
-            "resource": {
-                "aggregateBy": [{
-                    "dataTypeName": "com.google.step_count.delta",
-                    "dataSourceId": "derived:com.google.step_count
 
