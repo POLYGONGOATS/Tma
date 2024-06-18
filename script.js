@@ -1,47 +1,42 @@
+// script.js
+document.addEventListener("DOMContentLoaded", function() {
+    const stepCountDisplay = document.getElementById('step-count');
+    const incrementButton = document.getElementById('increment-button');
+    const convertButton = document.getElementById('convert-button');
+    const stepsInput = document.getElementById('steps-input');
+    const tokenResult = document.getElementById('token-result');
+    let stepCount = 0;
 
-let steps = 0;
-let isTracking = false;
+    incrementButton.addEventListener('click', function() {
+        stepCount++;
+        stepCountDisplay.textContent = stepCount;
+        stepCountDisplay.style.animation = 'none';
+        setTimeout(() => {
+            stepCountDisplay.style.animation = '';
+        }, 10);
+    });
 
-document.getElementById('startBtn').addEventListener('click', function() {
-    if (!isTracking) {
-        isTracking = true;
-        this.textContent = 'Stop Tracking';
-        startTrackingSteps();
-    } else {
-        isTracking = false;
-        this.textContent = 'Start Tracking';
-        stopTrackingSteps();
-    }
-});
+    convertButton.addEventListener('click', function() {
+        const stepsToConvert = parseInt(stepsInput.value, 10);
+        if (!isNaN(stepsToConvert) && stepsToConvert > 0) {
+            const tokens = stepsToConvert / 100;
+            tokenResult.textContent = `You get ${tokens} Stepr Tokens`;
+        } else {
+            tokenResult.textContent = 'Please enter a valid number of steps';
+        }
+    });
 
-document.getElementById('convertBtn').addEventListener('click', function() {
-    const tokens = Math.floor(steps / 100);
-    alert(`You have earned ${tokens} Stepr Tokens!`);
-    steps = 0;
-    updateStepCounter();
-});
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-function startTrackingSteps() {
-    if ('Accelerometer' in window) {
-        const accelerometer = new Accelerometer({ frequency: 1 });
-        accelerometer.addEventListener('reading', () => {
-            steps += 1;
-            updateStepCounter();
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            button.classList.add('active');
+            document.getElementById(button.dataset.tab).classList.add('active');
         });
-        accelerometer.start();
-    } else {
-        alert('Accelerometer not supported on this device.');
-    }
-}
+    });
+});
 
-function stopTrackingSteps() {
-    if ('Accelerometer' in window) {
-        const accelerometer = new Accelerometer({ frequency: 1 });
-        accelerometer.removeEventListener('reading', updateStepCounter);
-        accelerometer.stop();
-    }
-}
-
-function updateStepCounter() {
-    document.getElementById('stepCounter').textContent = `Steps: ${steps}`;
-}
