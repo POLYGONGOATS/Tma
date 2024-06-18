@@ -6,17 +6,33 @@ document.addEventListener("DOMContentLoaded", function() {
     const tokenResult = document.getElementById('token-result');
     let stepCount = 0;
     let lastShakeTime = null;
+    let lastAcceleration = { x: 0, y: 0, z: 0 };
+    let stepDetected = false;
 
     // Update step count display
     function updateStepDisplay(count) {
         stepCountDisplay.textContent = count;
     }
 
-    // Detect shake
-    function detectShake(event) {
-        const acceleration = Math.sqrt(event.acceleration.x ** 2 + event.acceleration.y ** 2 + event.acceleration.z ** 2);
+    // Detect shake or step
+    function detectStepOrShake(event) {
+        const { acceleration } = event;
+        const deltaX = Math.abs(acceleration.x - lastAcceleration.x);
+        const deltaY = Math.abs(acceleration.y - lastAcceleration.y);
+        const deltaZ = Math.abs(acceleration.z - lastAcceleration.z);
 
-        if (acceleration > 15) { // Threshold for shake detection
+        if ((deltaX > 2 || deltaY > 2 || deltaZ > 2) && !stepDetected) {
+            stepCount++;
+            updateStepDisplay(stepCount);
+            stepDetected = true;
+            setTimeout(() => stepDetected = false, 1000);
+        }
+
+        const accelerationTotal = Math.sqrt(
+            acceleration.x ** 2 + acceleration.y ** 2 + acceleration.z ** 2
+        );
+
+        if (accelerationTotal > 15) { // Threshold for shake detection
             const currentTime = Date.now();
             if (!lastShakeTime || (currentTime - lastShakeTime) > 2000) { // 2 seconds interval
                 stepCount++;
@@ -24,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 lastShakeTime = currentTime;
             }
         }
+
+        lastAcceleration = { ...acceleration };
     }
 
     // Step conversion functionality
@@ -53,10 +71,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Listen to device motion events
     if (window.DeviceMotionEvent) {
-        window.addEventListener('devicemotion', detectShake);
+        window.addEventListener('devicemotion', detectStepOrShake);
     } else {
         alert('Device Motion not supported');
     }
 });
+
 
 
