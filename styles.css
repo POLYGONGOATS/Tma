@@ -57,20 +57,28 @@ main {
     display: block;
 }
 
-.step-counter, .step-conversion, .socials {
-    text-align: center;
-}
-
-.steps-display, .conversion-display {
+.steps-display {
     font-size: 2em;
     color: #333;
     margin: 20px 0;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 #step-count {
     font-size: 3em;
     color: #ff7e5f;
-    animation: pop-in 0.3s ease;
 }
 
 #increment-button, #convert-button {
@@ -114,14 +122,34 @@ input[type="number"] {
     color: #feb47b;
 }
 
-@keyframes pop-in {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+#auth-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
 }
+
+#auth-button {
+    background: #4285f4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#auth-button:hover {
+    background: #357ae8;
+}
+
 
