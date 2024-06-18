@@ -81,7 +81,7 @@ main {
     color: #ff7e5f;
 }
 
-#increment-button, #convert-button {
+#convert-button {
     background: linear-gradient(to right, #ff7e5f, #feb47b);
     border: none;
     border-radius: 25px;
@@ -93,7 +93,7 @@ main {
     outline: none;
 }
 
-#increment-button:hover, #convert-button:hover {
+#convert-button:hover {
     background: linear-gradient(to right, #feb47b, #ff7e5f);
 }
 
@@ -122,34 +122,5 @@ input[type="number"] {
     color: #feb47b;
 }
 
-#auth-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: white;
-    text-align: center;
-}
-
-#auth-button {
-    background: #4285f4;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 1em;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#auth-button:hover {
-    background: #357ae8;
-}
 
 
