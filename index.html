@@ -8,41 +8,62 @@
 </head>
 <body>
     <div class="app-container">
-        <header>
-            <nav>
-                <button class="tab-button active" data-tab="step-counter">Step Counter</button>
-                <button class="tab-button" data-tab="step-conversion">Step Conversion</button>
-                <button class="tab-button" data-tab="socials">Socials</button>
-            </nav>
+        <header class="app-header">
+            <h1>Hamster Kombat</h1>
+            <div class="user-info">
+                <img src="hamster-icon.png" alt="User Icon">
+                <span>Sarcastic Guy 💙 (CEO)</span>
+            </div>
         </header>
-        <main>
-            <section id="step-counter" class="tab-content active">
-                <h1>Step Counter</h1>
-                <div class="steps-display">
-                    <span id="step-count">0</span> Steps
+        
+        <main class="main-content">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="label">Earn per step</span>
+                    <span class="value">+8</span>
                 </div>
-            </section>
-            <section id="step-conversion" class="tab-content">
-                <h1>Step Conversion</h1>
-                <div class="conversion-display">
-                    <input type="number" id="steps-input" placeholder="Enter steps">
-                    <button id="convert-button">Convert</button>
-                    <p id="token-result"></p>
+                <div class="stat-item">
+                    <span class="label">Steps to level up</span>
+                    <span class="value">50M</span>
                 </div>
-            </section>
-            <section id="socials" class="tab-content">
-                <h1>Socials</h1>
-                <div class="social-links">
-                    <a href="https://facebook.com" target="_blank">Facebook</a>
-                    <a href="https://twitter.com" target="_blank">Twitter</a>
-                    <a href="https://instagram.com" target="_blank">Instagram</a>
+                <div class="stat-item">
+                    <span class="label">Steps per hour</span>
+                    <span class="value">+113.02K</span>
                 </div>
-            </section>
+            </div>
+            <div class="coins-display">
+                <span class="coins-value" id="coinsValue">20,612,348</span>
+                <span class="level">Level 7/10</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="avatar-container">
+                <img src="hamster-avatar.png" alt="Hamster Avatar">
+            </div>
+            <div class="energy-container">
+                <span id="stepsCount">0 / 5000</span>
+            </div>
         </main>
+        
+        <nav class="bottom-nav">
+            <button class="nav-button">Exchange</button>
+            <button class="nav-button">Mine</button>
+            <button class="nav-button">Friends</button>
+            <button class="nav-button">Earn</button>
+            <button class="nav-button">Airdrop</button>
+        </nav>
+        
+        <footer class="app-footer">
+            <button class="play-button">Play</button>
+            <button class="message-button">Message</button>
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
