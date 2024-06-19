@@ -1,64 +1,76 @@
-var timer = 30;
-let score = 0;  
-var hit;
+// script.js
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
+canvas.width = 600;
+canvas.height = 800;
 
-function makeBubble(){
-    
-let clutter = "";
+const bubbleColors = ['red', 'pink', 'violet', 'url(zebra.png)'];
+const bubbles = [];
+const shooter = { x: canvas.width / 2, y: canvas.height - 50, angle: 0 };
 
-for(var i = 1; i<=175; i++ ){
-   let random = Math.floor(Math.random()*10)
-    clutter +=   <div class="bubble">${random}</div>;
+class Bubble {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = 20;
+        this.color = color;
+        this.speed = 5;
+        this.angle = shooter.angle;
+    }
 
-}
+    update() {
+        this.x += this.speed * Math.cos(this.angle);
+        this.y += this.speed * Math.sin(this.angle);
+    }
 
-document.querySelector(".pbtm").innerHTML = clutter;
-
-}
-function runTimer(){
-
-  let timeint =  setInterval(function () {
-
-        if( timer>0){
-         
-        timer--;
-        document.querySelector("#timerval").textContent = timer;   
+    draw() {
+        ctx.beginPath();
+        if (this.color.startsWith('url')) {
+            const img = new Image();
+            img.src = this.color.slice(4, -1).replace(/['"]/g, "");
+            ctx.drawImage(img, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        } else {
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fill();
         }
-        else{
-            clearInterval(timeint);
-            document.querySelector("#pbotm").innerHTML = <h1>Game Over <br> Your Score: ${score}</h1;
+        ctx.closePath();
+    }
+}
+
+function shootBubble() {
+    const color = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+    const bubble = new Bubble(shooter.x, shooter.y, color);
+    bubbles.push(bubble);
+}
+
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    bubbles.forEach((bubble, index) => {
+        bubble.update();
+        bubble.draw();
+
+        // Remove bubble if it goes off screen
+        if (bubble.y < -bubble.radius) {
+            bubbles.splice(index, 1);
         }
-},1000);
-}
-function  getNewhit(){
-    hit = Math.floor(Math.random()*10)
-    document.querySelector("#hitval").textContent= (hit)
-}
-function runScore(){
-score += 10; 
-document.querySelector("#scoreval").textContent = score;
+    });
 
+    requestAnimationFrame(update);
 }
 
+function rotateShooter(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-
-let bot = document.querySelector("#pbotm")
-bot.addEventListener("click",function (dets){
-   let clickednum = Number (dets.target.textContent);
-if(clickednum===hit){
-    runScore();
-    makeBubble();
-    getNewhit();
+    shooter.angle = Math.atan2(mouseY - shooter.y, mouseX - shooter.x);
 }
 
-})
+canvas.addEventListener('mousemove', rotateShooter);
+canvas.addEventListener('click', shootBubble);
 
+update();
 
-
-
-
-runTimer();
-makeBubble();
-getNewhit();
 
