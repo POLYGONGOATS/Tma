@@ -1,67 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step Counter App</title>
+    <title>Bubble Shooter Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Hamster Kombat</h1>
-            <div class="user-info">
-                <img src="hamster-icon.png" alt="User Icon">
-                <span>Sarcastic Guy 💙 (CEO)</span>
-            </div>
-        </header>
-        
-        <main class="main-content">
-            <div class="stats-container">
-                <div class="stat-item">
-                    <span class="label">Earn per step</span>
-                    <span class="value">+8</span>
-                </div>
-                <div class="stat-item">
-                    <span class="label">Steps to level up</span>
-                    <span class="value">50M</span>
-                </div>
-                <div class="stat-item">
-                    <span class="label">Steps per hour</span>
-                    <span class="value">+113.02K</span>
-                </div>
-            </div>
-            <div class="coins-display">
-                <span class="coins-value" id="coinsValue">20,612,348</span>
-                <span class="level">Level 7/10</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
-            <div class="avatar-container">
-                <img src="hamster-avatar.png" alt="Hamster Avatar">
-            </div>
-            <div class="energy-container">
-                <span id="stepsCount">0 / 5000</span>
-            </div>
-        </main>
-        
-        <nav class="bottom-nav">
-            <button class="nav-button">Exchange</button>
-            <button class="nav-button">Mine</button>
-            <button class="nav-button">Friends</button>
-            <button class="nav-button">Earn</button>
-            <button class="nav-button">Airdrop</button>
-        </nav>
-        
-        <footer class="app-footer">
-            <button class="play-button">Play</button>
-            <button class="message-button">Message</button>
-        </footer>
-    </div>
 
-    <script src="script.js"></script>
+<body>
+    <div class="main">
+        <div class="panel">
+            <div class="ptop">
+                <div class="elem">
+                    <h3>Hit</h3>
+                    <div id="hitval" class="box">5</div>
+                </div>
+                <div class="elem">
+                    <h3>Timer</h3>
+                    <div id="timerval" class="box">60</div>
+                </div>
+                <div class="elem">
+                    <h3>Score</h3>
+                    <div id="scoreval" class="box">0</div>
+                </div>
+            </div>
+
+            <div id="pbotm" class="pbtm">
+                <div class="bubble">
+                    5
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script src="script.js"></script>
+
 </html>
 
 
