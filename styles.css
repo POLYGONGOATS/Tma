@@ -1,104 +1,39 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-
-html,
+/* styles.css */
 body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f0f0;
+}
+
+.game-container {
+    position: relative;
+    width: 600px;
+    height: 800px;
+    background: #fff;
+    border: 2px solid #333;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#gameCanvas {
     width: 100%;
     height: 100%;
 }
 
-.main {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(142, 212, 142);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.shooter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-
-.panel {
-
-    width: 90%;
-    height: 97%;
-    background-color: #FFf;
-    border-radius: 10px;
-    overflow: hidden;
+#shooterImage {
+    width: 100px;
 }
 
-.ptop {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    color: #FFf;
-    width: 100%;
-    height: 4.5rem;
-    background-color: rgb(69, 153, 69);
-    padding-top: 15px;
-    padding-bottom: 25px;
-}
-
-.elem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: .5rem;
-
-}
-
-.elem h3 {
-    font-weight: 500;
-    font-size: 1.5rem;
-}
-
-.box {
-    font-weight: 700;
-    padding: .75rem 1.5rem;
-    background-color: #FFf;
-    border-radius: .25rem;
-    color: rgba(0, 128, 0, 0.63);
-}
-
-.pbtm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 17px;
-    width: 100%;
-    height: calc(100% - 80px);
-    flex-wrap: wrap;
-
-
-}
-
-.bubble {
-    width: 40px;
-    height: 40px;
-    background-color: rgb(7, 121, 55);
-    color: #FFf;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-weight: 600;
-    transition: .2s;
-    margin: 9px;
-
-
-}
-
-.bubble:hover {
-    background-color: rgb(31, 109, 12);
-    transition: .2s;
-    cursor: pointer;
-                          }
 
 
 
