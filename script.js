@@ -1,35 +1,64 @@
-let steps = 0;
-let tokens = 0;
+var timer = 30;
+let score = 0;  
+var hit;
 
-if (window.DeviceMotionEvent) {
-    window.addEventListener("devicemotion", handleMotionEvent, true);
+
+function makeBubble(){
+    
+let clutter = "";
+
+for(var i = 1; i<=175; i++ ){
+   let random = Math.floor(Math.random()*10)
+    clutter +=   <div class="bubble">${random}</div>;
+
 }
 
-function handleMotionEvent(event) {
-    let acceleration = event.acceleration;
-    if (acceleration.x > 1 || acceleration.y > 1 || acceleration.z > 1) {
-        steps++;
-        updateSteps();
-    }
+document.querySelector(".pbtm").innerHTML = clutter;
+
+}
+function runTimer(){
+
+  let timeint =  setInterval(function () {
+
+        if( timer>0){
+         
+        timer--;
+        document.querySelector("#timerval").textContent = timer;   
+        }
+        else{
+            clearInterval(timeint);
+            document.querySelector("#pbotm").innerHTML = <h1>Game Over <br> Your Score: ${score}</h1;
+        }
+},1000);
+}
+function  getNewhit(){
+    hit = Math.floor(Math.random()*10)
+    document.querySelector("#hitval").textContent= (hit)
+}
+function runScore(){
+score += 10; 
+document.querySelector("#scoreval").textContent = score;
+
 }
 
-function updateSteps() {
-    document.getElementById('stepsCount').innerText = `${steps} / 5000`;
-    if (steps >= 10) {
-        tokens++;
-        steps -= 10;
-        updateCoins();
-        alert(`1 token received in wallet! Total tokens: ${tokens}`);
-    }
+
+
+let bot = document.querySelector("#pbotm")
+bot.addEventListener("click",function (dets){
+   let clickednum = Number (dets.target.textContent);
+if(clickednum===hit){
+    runScore();
+    makeBubble();
+    getNewhit();
 }
 
-function updateCoins() {
-    let coinsElement = document.getElementById('coinsValue');
-    let currentCoins = parseInt(coinsElement.innerText.replace(/,/g, ''));
-    currentCoins += 1;
-    coinsElement.innerText = currentCoins.toLocaleString();
-}
+})
 
 
 
+
+
+runTimer();
+makeBubble();
+getNewhit();
 
